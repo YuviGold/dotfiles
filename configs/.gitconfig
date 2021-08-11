@@ -1,0 +1,13 @@
+[user]
+	name = Yuval Goldberg
+	email = yuvigoldi@gmail.com
+[alias]
+	st = status
+	br = branch
+	ci = commit
+	co = checkout
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+[core]
+	editor = vim
+[help]
+	autocorrect = 1
