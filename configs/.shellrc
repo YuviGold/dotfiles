@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+for shell_script in .shell_aliases.sh .gsettings; do
+	if [ -f "${HOME}/${shell_script}" ]; then
+		source "${HOME}/${shell_script}"
+	fi
+done
+
+# envs
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Completeion
+shell=$(echo ${SHELL} | cut -d'/' -f4)
+source <(gh completion --shell "${shell}")
+source <(arkade completion "${shell}")
+
