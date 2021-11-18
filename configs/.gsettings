@@ -12,6 +12,8 @@ gsettings --schemadir ~/.local/share/gnome-shell/extensions/wsmatrix@martin.zuro
 gsettings --schemadir ~/.local/share/gnome-shell/extensions/wsmatrix@martin.zurowietz.de/schemas/ set org.gnome.shell.extensions.wsmatrix-settings wraparound-mode 'none'
 gsettings --schemadir ~/.local/share/gnome-shell/extensions/wsmatrix@martin.zurowietz.de/schemas/ set org.gnome.shell.extensions.wsmatrix-settings show-overview-grid false
 
+gsettings set org.gnome.mutter workspaces-only-on-primary false
+
 ## pop-shell extension
 
 # gsettings set org.gnome.shell.extensions.pop-shell active-hint true
@@ -19,6 +21,10 @@ gsettings --schemadir ~/.local/share/gnome-shell/extensions/wsmatrix@martin.zuro
 # gsettings set org.gnome.shell.extensions.pop-shell focus-left "['<Super>Left', '<Super>KP_Left']"
 # gsettings set org.gnome.shell.extensions.pop-shell focus-right "['<Super>Right', '<Super>KP_Right']"
 # gsettings set org.gnome.shell.extensions.pop-shell focus-up "['<Super>Up', '<Super>KP_Up']"
+
+# Terminal
+gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/terminator
+gsettings set org.gnome.desktop.default-applications.terminal exec-arg "-x"
 
 
 # Hotkeys

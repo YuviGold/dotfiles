@@ -5,6 +5,18 @@ set -o pipefail
 set -o errexit
 
 
+sudo apt install \
+	vim \
+	git \
+	curl
+
+# Terminal & Shell
+sudo apt install terminator
+if [ -z "${ZSH:-}" ]; then
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	sed -i 's/^plugins=.*/plugins=(git sudo colored-man-pages dircycle)/g' "${HOME}/.zshrc"
+fi
+
 # Set dot files
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 find "${__dir}/configs" -type f -exec sh -c 'ln -v -s {} ${HOME}/$(basename {})' \;
@@ -27,6 +39,10 @@ fi
 
 ## Utilities
 brew install fzf
+arkade get jq
+
+## K8s utils
+arkade get docker-compose kubectl kind
 
 ## Git extensions
 arkade get gh

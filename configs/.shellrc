@@ -7,6 +7,7 @@ for shell_script in .shell_aliases.sh .gsettings; do
 done
 
 # envs
+export PATH=${PATH}:${HOME}/.arkade/bin
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Completeion
