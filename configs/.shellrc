@@ -7,11 +7,18 @@ for shell_script in .shell_aliases.sh .gsettings; do
 done
 
 # envs
+export PATH=${PATH}:${HOME}/.local/bin
 export PATH=${PATH}:${HOME}/.arkade/bin
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PATH=${PATH}:/usr/local/go/bin:${HOME}/go/bin
+export GOPATH=${HOME}/go/
+export PATH=${PATH}:$(go env GOPATH)/bin
 
 # Completeion
-shell=$(echo ${SHELL} | cut -d'/' -f4)
-source <(gh completion --shell "${shell}")
-source <(arkade completion "${shell}")
+shell=$(basename ${SHELL})
 
+if [ -x "$(command -v gh)" ]; then
+	source <(gh completion --shell "${shell}")
+fi
+if [ -x "$(command -v arkade)" ]; then
+	source <(arkade completion "${shell}")
+fi
