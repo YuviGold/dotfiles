@@ -48,7 +48,7 @@ if [ ! -x "$(command -v arkade)" ]; then
 	curl -sLS https://get.arkade.dev | sudo sh
 fi
 
-arkade system install go
+sudo arkade system install go
 
 ## Utilities
 wget https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb
