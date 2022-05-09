@@ -9,7 +9,7 @@ sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	vim git curl wget \
 	gnome-shell-extensions terminator \
-	flameshot fzf autojump
+	fzf autojump
 
 # Vim
 vim -es -u configs/.vimrc -i NONE -c "PlugInstall" -c "qa"
