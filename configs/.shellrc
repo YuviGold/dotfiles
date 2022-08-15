@@ -22,3 +22,9 @@ fi
 if [ -x "$(command -v arkade)" ]; then
 	source <(arkade completion "${shell}")
 fi
+
+# autojump depends on XDG env vars
+oldstate=$(set +o | grep nounset)
+set +o nounset
+. /usr/share/autojump/autojump.sh
+eval "${oldstate}"
