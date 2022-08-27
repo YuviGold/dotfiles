@@ -8,29 +8,39 @@ set -o xtrace
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	vim git curl wget \
-	gnome-shell-extensions terminator \
+	gnome-shell-extensions zsh terminator \
 	fzf autojump
 
 # Vim
-vim -es -u configs/.vimrc -i NONE -c "PlugInstall" -c "qa"
+vim -N -es -u configs/.vimrc -i NONE -c "PlugInstall" -c "qa"
 
 # Gnome extensions
-extensions=( "primary_input_on_lockscreensagidayan.com.v2" "wsmatrixmartin.zurowietz.de.v33" )
+extensions=( "primary_input_on_lockscreensagidayan.com.v3" "wsmatrixmartin.zurowietz.de.v35" )
 for extension in "${extensions[@]}"; do
 	file="${extension}.shell-extension.zip"
 	wget "https://extensions.gnome.org/extension-data/${file}"
-	uuid=$(unzip -c "${file}" metadata.json | grep uuid | cut -d \" -f4)
-	mkdir -p "${HOME}/.local/share/gnome-shell/extensions/${uuid}"
-	unzip -q "${file}" -d "${HOME}/.local/share/gnome-shell/extensions/${uuid}/"
-	gnome-extensions enable "${uuid}"
+	uuid=$(unzip -q -c "${file}" metadata.json | jq -r '.uuid')
+	version=$(unzip -q -c "${file}" metadata.json | jq -r '.version')
+	if ! gnome-extensions show ${uuid} || \
+	   [ "$(gnome-extensions show ${uuid} | grep -i version | awk '{print $2}')" != "${version}" ]; then
+		rm -rf  "${HOME}/.local/share/gnome-shell/extensions/${uuid}"
+		mkdir -p "${HOME}/.local/share/gnome-shell/extensions/${uuid}"
+		unzip -q "${file}" -d "${HOME}/.local/share/gnome-shell/extensions/${uuid}/"
+
+		# GNOME need to be restarted manually with ALT + F2
+		gnome-extensions enable "${uuid}"
+	fi
 	rm -f "${file}"
 done
 
 # Terminal & Shell
-if [ -n "${ZSH:-}" ]; then
-	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-	sed -i 's/^plugins=.*/plugins=(git sudo colored-man-pages dircycle)/g' "${HOME}/.zshrc"
+
+# Must log out from user session and log back in
+sudo chsh -s $(which zsh)
+if [ ! -d ${HOME}/.oh-my-zsh ]; then
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
+sed -i 's/^plugins=.*/plugins=(git sudo colored-man-pages dircycle)/g' "${HOME}/.zshrc"
 
 # Set dot files
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
