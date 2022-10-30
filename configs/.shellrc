@@ -12,6 +12,8 @@ export PATH=${PATH}:${HOME}/.arkade/bin
 export PATH=${PATH}:/usr/local/go/bin:${HOME}/go/bin
 export GOPATH=${HOME}/go/
 export PATH=${PATH}:$(go env GOPATH)/bin
+export RPROMPT='$(tf_prompt_info)'
+
 
 # Completeion
 shell=$(basename ${SHELL})

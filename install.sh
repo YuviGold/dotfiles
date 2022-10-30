@@ -40,7 +40,7 @@ sudo chsh -s $(which zsh)
 if [ ! -d ${HOME}/.oh-my-zsh ]; then
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
-sed -i 's/^plugins=.*/plugins=(git sudo colored-man-pages dircycle)/g' "${HOME}/.zshrc"
+sed -i 's/^plugins=.*/plugins=(git sudo colored-man-pages dircycle terraform)/g' "${HOME}/.zshrc"
 
 # Set dot files
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
